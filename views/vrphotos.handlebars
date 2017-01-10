@@ -1,0 +1,75 @@
+<div>
+<a-scene physics="debug: false">
+  <a-assets>
+    <img id="china" src ="img/360/china1.jpg">
+  {{#each photoIndex}}
+    <img id="#photo{{@index}}" src ="img/360/{{file}}.jpg">
+  {{/each}}
+    <img id="block" src ="img/textures/ETCblock.jpg">
+    <img id="groundTex" src ="img/textures/floor.jpg">
+  </a-assets>
+
+  <!-- 360-degree image. -->
+<a-entity>
+  <a-torus
+    arc="360"
+    radius="1.5"
+    radius-tubular="0.02"
+    rotation="90 0 0"
+    position="0 1.25 0"
+    color="#c0c0c0">
+  </a-torus>
+  <a-torus
+    arc="360"
+    radius="1.5"
+    radius-tubular="0.02"
+    rotation="90 0 0"
+    position="0 -.25 0"
+    color="#c0c0c0">
+  </a-torus>
+<a-sky color="#000000"></a-sky>
+
+  <a-cylinder id="activePicture"
+          open-ended="true"
+          material="side: double"
+          height="1.5"
+          radius="1.5"
+          position = "0 .5 0"
+          src = "#china">
+          <a-animation attribute="rotation" to="0 360 0" dur="100000" repeat="indefinite">
+  </a-cylinder>
+</a-entity>
+
+<a-entity>
+  <a-plane id="ground" static-body
+    height="10"
+    width="10"
+    position="0 -2 0"
+    rotation="-90 0 0"
+    src="#groundTex"
+  </a-plane>
+</a-entity>
+
+
+
+
+
+
+  <!-- Image links. -->
+  {{#each photoIndex}}
+  <a-entity id="links" >
+    <a-sphere position="{{@index}} 10 -1" dynamic-body radius=".10" src ="img/360/{{file}}.jpg" >
+    <!--children-->
+      <a-animation begin="mouseenter" attribute="scale" to="5 5 5"></a-animation>
+      <a-animation begin="mouseleave" attribute="scale" to="1 1 1"></a-animation>
+    </a-sphere>
+  </a-entity>
+{{/each}}
+  <!-- Camera + cursor. -->
+  <a-entity camera look-controls>
+    <a-cursor id="cursor"
+       position=" 2 0 2">
+    </a-cursor>
+  </a-entity>
+</a-scene>
+</div>
